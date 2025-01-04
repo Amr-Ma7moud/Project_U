@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../static/css/home.css">
+    <link rel="stylesheet" href="../static/css/background.css">
+    <link rel="stylesheet" href="../static/css/navbar.css">
+    <script src="../static/js/cards.js"></script>
+    <title>PROJECT U</title>
+</head>
+<body>
+    <!--  background   -->
+        <div class="gradient-bg gradient-1"></div>
+        <div class="gradient-bg gradient-2"></div>
+        <div class="gradient-bg gradient-3"></div>
+        <div class="particles"></div>
+        <script src="../static/js/background.js"></script>
+    
+    <!-- navbar -->
+<div class="navigation">
+    <a href="{{ url_for('profile') }}"><button id="profile">Profile</button></a>
+    <a href="{{ url_for('recommend') }}"><button id="signup">recommend</button></a>
+    <a href="{{ url_for('main') }}"><button id="popular">PROJECT U</button></a>
+    <a href="{{ url_for('compare') }}"><button id="compare">compare</button></a>
+    <a href="{{ url_for('aboutUs') }}"><button id="aboutUs">About US</button></a>
+    {% if current_user.is_authenticated %}
+    <a href="{{ url_for('logout') }}"><button id="aboutUs">Logout</button></a>
+    {% else %}
+        <a href="{{ url_for('Signup') }}"><button id="Signup">Signup</button></a>
+    {% endif %}
+</div>
+
+    
+    <div id="overlay" class="overlay"></div>
+
+    <div class="header">
+        <h1>PROJECT <span class="highlight">U</span></h1>
+    </div>
+    
+    <div class="search-recommend">
+        <div class="search-container">
+            <form action="{{ url_for('search') }}" method="POST">
+                <div class="input__container">
+                    <div class="shadow__input"></div>
+                    <button type="submit" class="input__button__shadow">
+                        <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="20px" width="20px">
+                            <path d="M4 9a5 5 0 1110 0A5 5 0 014 9zm5-7a7 7 0 104.2 12.6.999.999 0 00.093.107l3 3a1 1 0 001.414-1.414l-3-3a.999.999 0 00-.107-.093A7 7 0 009 2z" fill-rule="evenodd" fill="#17202A"></path>
+                        </svg>
+                    </button>
+                    <input type="text" name="search_query" class="input__search" placeholder="search for a university">
+                </div>
+            </form>
+        </div>
+        
+        <div class="recommend-container">
+            <h2>Or make us recommend you a one!</h2>
+        </div>
+    </div>
+
+    {% if search_results %}
+    <div class="search-results">
+        <h2>Search Results:</h2>
+        <ul>
+            {% for result in search_results %}
+            <li>{{ result.name }} - <a href="{{ result.website }}">{{ result.website }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/index.css">
+    <link rel="stylesheet" href="../static/css/background.css">
+    <title>PROJECT U</title>
+  
+</head>
+<body>
+    
+  
+
+    <div class="gradient-bg gradient-1"></div>
+    <div class="gradient-bg gradient-2"></div>
+    <div class="gradient-bg gradient-3"></div>
+    <div class="particles"></div>
+    <script src="../static/js/background.js"></script>
+    
+
+
+
+
+    {% if not current_user.is_authenticated %}
+    <header class="header">
+        <a href="{{ url_for('Signup') }}"><button id="signup">Sign Up</button></a>
+        <a href="{{ url_for('Login') }}"><button id="login">Log In</button></a>
+    </header>
+    {% endif %}
+    <h1 class="title">PROJECT<span class="highlight"> U</span></h1>
+    <p class="subtitle">your gateway to discover and compare universities</p>
+
+    <a href="{{ url_for('main') }}" class="title"><button class="get-started">Get Started</button></a>
+</body>
+</html>

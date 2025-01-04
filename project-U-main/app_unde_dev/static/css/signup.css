@@ -1,0 +1,133 @@
+:root{
+    --h1font: 'Segoe UI', Arial, sans-serif;
+    --pfont: 'Noto Sans', sans-serif;
+    --buttonfont: 'Noto Sans', sans-serif;
+    --inputfont: 'Noto Sans', sans-serif;
+    --background: linear-gradient(45deg, #050505, #010101);
+    --buttoncolor: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    --fontcolor: white;
+}
+
+
+
+
+
+
+
+
+
+body {
+    font-family: var(--pfont);
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    margin: 0; 
+    /* display: flex; */
+    text-align: center;
+    align-items: center;
+    min-height: 100vh;
+    background-position: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #111;
+    color: var(--fontcolor);
+}
+
+
+
+.form-container {
+    
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    width: 50%;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    margin-top:10% ;
+    animation: formAppear 0.5s ease-out;
+    z-index: 1;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+
+.form-title {
+    color: white;
+    font-family: var(--h1font);
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    /* width: 48%; */
+    margin: 4%;
+    gap: 20%;
+}
+
+
+
+.form-group label {
+    display: block;
+    color: #8B5CF6;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.form-group input{
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #333;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #8B5CF6;
+    box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+}
+
+
+
+
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(45deg, #8B5CF6, #4C1D95);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    margin-top: 20px;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+}
+
+@keyframes formAppear {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

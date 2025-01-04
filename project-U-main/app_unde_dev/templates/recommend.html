@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../static/css/recommend.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/background.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/navbar.css">
+    <title>PROJECT U</title>
+</head>
+<body>
+
+ <!-- background -->
+ <body>
+    <div class="gradient-bg gradient-1"></div>
+    <div class="gradient-bg gradient-2"></div>
+    <div class="gradient-bg gradient-3"></div>
+    <div class="particles"></div>
+    <script src="../static/js/background.js"></script>
+
+<!-- navbar -->
+<div class="navigation">
+    <a href="{{ url_for('profile') }}"><button id="profile">Profile</button></a>
+    <a href="{{ url_for('recommend') }}"><button id="signup">recommend</button></a>
+    <a href="{{ url_for('main') }}"><button id="popular">PROJECT U</button></a>
+    <a href="{{ url_for('compare') }}"><button id="popular">compare</button></a>
+    <a href="{{ url_for('aboutUs') }}"><button id="aboutUs">About US</button></a>
+</div>
+ 
+
+
+
+
+</body>
+</html>

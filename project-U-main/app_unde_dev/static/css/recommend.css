@@ -1,0 +1,24 @@
+:root {
+    --h1font: 'Segoe UI', Arial, sans-serif;
+    --pfont: 'Noto Sans', sans-serif;
+    --buttonfont: 'Noto Sans', sans-serif;
+    --inputfont: 'Noto Sans', sans-serif;
+    --background: linear-gradient(45deg, #050505, #010101);
+    --buttoncolor: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    --fontcolor: white;
+  }
+  
+  body {
+    font-family: var(--pfont);
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    text-align: center;
+    min-height: 100vh;
+    color: var(--fontcolor);
+  }
+  
+
