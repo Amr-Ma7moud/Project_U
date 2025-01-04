@@ -112,14 +112,14 @@
                 {% endif %}
                 {{ form.score.label(class='form-control-label') }}
                     {% if form.score.errors %}
-                    {{ form.score(class='form-control form-control-lg is-invalid', type='number', min='1', max='100', step='1',placeholder="Score%") }}
+                    {{ form.score(class='form-control form-control-lg is-invalid', type='number', min='1', max='100', step='1',placeholder="Score %") }}
                     <div class="invalid-feedback">
                         {% for error in form.score.errors %}
                         <span>{{ error }}</span>
                         {% endfor %}
                     </div>
                     {% else %}
-                    {{ form.score(class='form-control form-control-lg', type='number', min='1', max='100', step='1',placeholder="Score%") }}
+                    {{ form.score(class='form-control form-control-lg', type='number', min='1', max='100', step='1',placeholder="Score %") }}
                     {% endif %}
         
                 {{ form.location.label(class='form-control-label') }}
