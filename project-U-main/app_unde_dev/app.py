@@ -169,6 +169,7 @@ def Login():
 @app.route("/logout")
 def logout():
     logout_user()
+    flash("You loged out successfully", "info")
     return redirect(url_for("index"))
 
 
@@ -223,24 +224,19 @@ def search():
 
     return jsonify(result)
 
-
-@app.route("/edit_profile", methods=["GET", "POST"])
-def edit_profile():
-    if not current_user.is_authenticated:
-        return redirect(url_for("Login"))
-    user_id = session["user_id"]
-    user = User.query.get(user_id)
-    return render_template("edit_profile.html", user=user)
-
-
-@app.route("/delete_profile", methods=["GET", "POST"])
+@app.route("/delete_profile", methods=["POST", "GET"])
+@login_required
 def delete_profile():
-    if not current_user.is_authenticated:
-        return redirect(url_for("Login"))
     user_id = session["user_id"]
     user = User.query.get(user_id)
-    return render_template("delete_profile.html", user=user)
-
+    if user:
+        db.session.delete(user)
+        db.session.commit()
+        logout_user()
+        flash("Your profile has been deleted.", "success")
+        return redirect(url_for("index"))
+    flash("User not found.", "danger")
+    return redirect(url_for("profile"))
 
 class University(db.Model):
     id = db.Column(db.Integer, primary_key=True)
