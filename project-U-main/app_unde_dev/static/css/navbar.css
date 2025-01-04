@@ -56,5 +56,5 @@
 }
 
 .navigation button:hover {
-    transform: translateY(-3px);
+    transform: scale(1.1);
 }

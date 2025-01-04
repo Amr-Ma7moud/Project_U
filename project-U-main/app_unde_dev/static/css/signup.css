@@ -23,12 +23,12 @@
 
 body {
     font-family: var(--pfont);
-    overflow: hidden;
+    overflow:hidden;
     align-items: center;
     justify-content: center;
-    height: auto;
+    
     margin: 0; 
-    /* display: flex; */
+    display: flex;
     text-align: center;
     align-items: center;
     min-height: 100vh;
@@ -45,32 +45,33 @@ body {
     
     background: rgba(255, 255, 255, 0.05);
     border-radius: 20px;
-    width: 50%;
+    width: 30%;
     height: 50%;
-    display: flex;
+    display: grid;
     align-items: center;
     justify-content: center;
     margin: auto;
-    margin-top:10% ;
+    margin-top:5% ;
     animation: formAppear 0.5s ease-out;
-    z-index: 1;
+    
     backdrop-filter: blur(10px);
     box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    text-align: center;
 }
 
 .form-title {
     color: white;
     font-family: var(--h1font);
-    font-size: 2rem;
+    font-size: 40px;
     text-align: center;
     margin-bottom: 30px;
 }
 
 .form-group {
     margin-bottom: 20px;
-    display: flex;
+    align-items: center;
     flex-wrap: wrap;
-    /* width: 48%; */
+    width: 85%;
     margin: 4%;
     gap: 20%;
 }
@@ -78,7 +79,8 @@ body {
 
 
 .form-group label {
-    display: block;
+    
+    display:none;
     color: #8B5CF6;
     margin-bottom: 8px;
     font-size: 0.9rem;
@@ -93,6 +95,7 @@ body {
     color: white;
     font-size: 1rem;
     transition: all 0.3s ease;
+    margin-bottom: 3%;
 }
 
 .form-group input:focus {
@@ -103,14 +106,13 @@ body {
 
 
 
-
 .submit-btn {
     width: 100%;
     padding: 12px;
     background: linear-gradient(45deg, #8B5CF6, #4C1D95);
     border: none;
     border-radius: 8px;
-    color: white;
+    color: black;
     font-size: 1rem;
     cursor: pointer;
     transition: transform 0.3s ease;
@@ -119,7 +121,19 @@ body {
 
 .submit-btn:hover {
     transform: translateY(-2px);
+    background: white;
 }
+
+
+.login{
+
+    text-align: center;
+}
+
+
+
+
+
 
 @keyframes formAppear {
     from {

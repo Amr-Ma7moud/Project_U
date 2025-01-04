@@ -22,7 +22,7 @@ from wtforms.validators import (
     EqualTo,
 )
 import os
-from API import Config
+# from API import Config
 from flask_login import (
     LoginManager,
     UserMixin,
@@ -48,7 +48,7 @@ db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 login_manager.login_view = "Login"
-app.config.from_object(Config)
+# app.config.from_object(Config)
 
 
 @login_manager.user_loader
