@@ -35,7 +35,27 @@
         
     </div>
 
-    
+ 
+<!-- alert massages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+    {% for category, message in messages %}
+    <link rel="stylesheet" href="../static/css/flashM.css">
+   
+<div class="no-inherit-display"  style="position: fixed; top: 0; width: 100%; z-index: 1; text-align: center;">
+    <div class="flash-messages" id="flash-messages" onclick="document.getElementById('flash-messages').style.display='none';">  
+         
+            <div class="alert alert-{{category}} text-center">
+                {{message}}
+            </div>
+</div>
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+
+
     <div class="main-container">
         <section class="compare">
             
@@ -44,28 +64,14 @@
                 </div>
 
                 <div class="row compare-columns">
-                    <!-- <div class="col-md-4 compare-table criteria">
-                        <ul class="features">
-                            <li><strong>Name:</strong> </li>
-                            <li><strong>Location:</strong> </li>
-                            
-                            <li><strong>Ranking:</strong> </li>
-                            <li><strong>Rate</strong></li>
-                        </ul>
-                        <div class="tution">
-                            <span class="sub">$</span>
-                            <span class="fees">5000</span>
-                            <span class="sub">/year</span>
-                           </div>
-                    </div> -->
+                   
 
                     <div class="col-md-4 compare-table">
                         <ul class="features">
-                            <li><strong>Name:</strong> </li>
-                            <li><strong>Location:</strong> </li>
-                            
-                            <li><strong>Ranking:</strong> </li>
-                            <li><strong>Rate</strong></li>
+                            <li>Name: </li>
+                            <li>Location: </li>
+                            <li>Ranking: </li>
+                            <li>Rate</li>
                         </ul>
                         <div class="tution">
                             <span class="sub">$</span>
@@ -82,11 +88,10 @@
 
                     <div class="col-md-4 compare-table">
                         <ul class="features">
-                            <li><strong>Name:</strong> </li>
-                            <li><strong>Location:</strong> </li>
-                            
-                            <li><strong>Ranking:</strong> </li>
-                            <li><strong>Rate</strong></li>
+                            <li>Name: </li>
+                            <li>Location: </li>
+                            <li>Ranking: </li>
+                            <li>Rate</li>
                         </ul>
 
                         <div class="tution">
@@ -99,11 +104,10 @@
 
                     <div class="col-md-4 compare-table">
                         <ul class="features">
-                            <li><strong>Name:</strong> </li>
-                            <li><strong>Location:</strong> </li>
-                            
-                            <li><strong>Ranking:</strong> </li>
-                            <li><strong>Rate</strong></li>
+                            <li>Name: </li>
+                            <li>Location: </li>
+                            <li>Ranking: </li>
+                            <li>Rate</li>
                         </ul>
                         <div class="tution">
                             <span class="sub">$</span>

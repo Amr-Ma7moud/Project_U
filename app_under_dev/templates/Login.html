@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="../static/css/login.css">
     <link rel="stylesheet" type="text/css" href="../static/css/background.css">
     <link rel="stylesheet" type="text/css" href="../static/css/navbar.css">
+    <link rel="stylesheet" href="../static/css/flashM.css">
     <title>PROJECT U</title>
 </head>
 <body>
@@ -30,19 +31,28 @@
     <a href="{{ url_for('aboutUs') }}"><button class="button" id="aboutUs">About US</button></a>
 
 </div>
-<div class="no-inherit-display" style="position: fixed; top: 0; width: 100%; z-index: 1; text-align: center;">
-    <div class="flash-messages">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
+
+
+<!-- alert massages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+    {% for category, message in messages %}
+    <link rel="stylesheet" href="../static/css/flashM.css">
+   
+<div class="no-inherit-display"  style="position: fixed; top: 0; width: 100%; z-index: 1; text-align: center;">
+    <div class="flash-messages" id="flash-messages" onclick="document.getElementById('flash-messages').style.display='none';">  
+         
             <div class="alert alert-{{category}} text-center">
                 {{message}}
             </div>
-            {% endfor %}
-        {% endif %}
-        {% endwith %}
 </div>
 </div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+
+
 
 <div class="form-container">
     <h2 class="form-title">Login</h2>

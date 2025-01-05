@@ -11,11 +11,14 @@
 </head>
 
 <body>
-    <div class="gradient-bg gradient-1"></div>
-    <div class="gradient-bg gradient-2"></div>
-    <div class="gradient-bg gradient-3"></div>
-    <div class="particles"></div>
-    <script src="../js/background.js"></script>
+  
+ <!-- background -->
+ <div class="gradient-bg gradient-1"></div>
+ <div class="gradient-bg gradient-2"></div>
+ <div class="gradient-bg gradient-3"></div>
+ <div class="particles">
+     <script src="../static/js/background.js"></script>
+ </div>
 
 <!-- navbar -->
 <div class="navigation">
@@ -30,20 +33,27 @@
     <a href="{{ url_for('aboutUs') }}"><button class="button" id="aboutUs">About US</button></a>
 
 </div>
-<div class="no-inherit-display" style="position: fixed; top: 0; width: 100%; z-index: 1; text-align: center;">
-    <div class="flash-messages">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
+
+
+<!-- alert massages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+    {% for category, message in messages %}
+    <link rel="stylesheet" href="../static/css/flashM.css">
+   
+<div class="no-inherit-display"  style="position: fixed; top: 0; width: 100%; z-index: 1; text-align: center;">
+    <div class="flash-messages" id="flash-messages" onclick="document.getElementById('flash-messages').style.display='none';">  
+         
             <div class="alert alert-{{category}} text-center">
                 {{message}}
             </div>
-            {% endfor %}
-        {% endif %}
-        {% endwith %}
 </div>
 </div>
- 
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+
     <div class="aboutUs-container">
         <h2 class="aboutUs-title">About Us</h2>
         <p class="aboutUs-content">PROJECT U is a platform that allows users to discover and compare universities. Users can search for universities based on their preferences and compare them side by side. PROJECT U aims to provide users with the information they need to make informed decisions about their future education.</p>

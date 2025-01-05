@@ -1,0 +1,48 @@
+
+@keyframes Appear {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes disapper {
+    from {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+  }
+
+
+.no-inherit-display{
+  position: fixed; 
+  top: 0; 
+  width: 100%; 
+  z-index: 1; 
+  text-align: center;
+}
+
+
+
+.flash-messages{
+    text-align: center;
+    display: flex;
+    font-size: 15px;
+    background-color:  rgba(255, 255, 255, 0.088);
+    padding: 1%;
+    margin-top: 3%;
+    width: 300px;
+    margin-left: 37%;
+    border-radius: 20px;
+    animation: Appear 0.6s ease-in;
+    
+}
+

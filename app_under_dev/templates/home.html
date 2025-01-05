@@ -6,9 +6,11 @@
     <link rel="stylesheet" type="text/css" href="../static/css/home.css">
     <link rel="stylesheet" href="../static/css/background.css">
     <link rel="stylesheet" href="../static/css/navbar.css">
+    
+    
     <script src="../static/js/cards.js"></script>
     <title>PROJECT U</title>
-</head> 
+</head>
 <body>
     <!--  background   -->
         <div class="gradient-bg gradient-1"></div>
@@ -17,37 +19,42 @@
         <div class="particles"></div>
         <script src="../static/js/background.js"></script>
     
-    <!-- navbar -->
+
 <!-- navbar -->
 <div class="navigation">
     {% if current_user.is_authenticated %}
-    <a href="{{ url_for('profile') }}"><button class="button" id="profile">Profile</button></a>
-    {% else %}  
-    <a href="{{ url_for('Signup') }}"><button class="button" id="Signup">Signup</button></a>
+        <a href="{{ url_for('profile') }}"><button class="button" id="profile">Profile</button></a>
+        {% else %}  
+        <a href="{{ url_for('Signup') }}"><button class="button" id="Signup">Signup</button></a>
     {% endif %}
     <a href="{{ url_for('recommend') }}"><button class="button" id="recommend">recommend</button></a>
     <a href="{{ url_for('main') }}"><button class="button" id="popular">PROJECT U</button></a>
     <a href="{{ url_for('compare') }}"><button class="button" id="compare">compare</button></a>
     <a href="{{ url_for('aboutUs') }}"><button class="button" id="aboutUs">About US</button></a>
-    {% if current_user.is_authenticated %}
-    <a href="{{ url_for('logout') }}"><button class="button" id="logout">Log Out</button></a>
-    {% endif %}
+
 </div>
-<div class="no-inherit-display" style="position: fixed; top: 0; width: 100%; z-index: 1; text-align: center;">
-    <div class="flash-messages">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
+
+
+<!-- alert massages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+    {% for category, message in messages %}
+    <link rel="stylesheet" href="../static/css/flashM.css">
+   
+<div class="no-inherit-display"  style="position: fixed; top: 0; width: 100%; z-index: 1; text-align: center;">
+    <div class="flash-messages" id="flash-messages" onclick="document.getElementById('flash-messages').style.display='none';">  
+         
             <div class="alert alert-{{category}} text-center">
                 {{message}}
             </div>
-            {% endfor %}
-        {% endif %}
-        {% endwith %}
 </div>
 </div>
-    
-    <div id="overlay" class="overlay"></div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+
+   
 
     <div class="header">
         <h1>PROJECT <span class="highlight">U</span></h1>
@@ -63,30 +70,34 @@
                             <path d="M4 9a5 5 0 1110 0A5 5 0 014 9zm5-7a7 7 0 104.2 12.6.999.999 0 00.093.107l3 3a1 1 0 001.414-1.414l-3-3a.999.999 0 00-.107-.093A7 7 0 009 2z" fill-rule="evenodd" fill="#17202A"></path>
                         </svg>
                     </button>
-                    {% if query %}
-                    <input type="text" name="search_query" class="input__search" placeholder="{{query}}">
-                    {% else %}
                     <input type="text" name="search_query" class="input__search" placeholder="search for a university">
-                    {% endif %}
                 </div>
             </form>
         </div>
-        {% if not query %}
+        
         <div class="recommend-container">
-            <h2>Or make us <a href="{{url_for('recommend')}}" style="display: inline;">recommend</a> you a one!</h2>
+            <h2>Or make us recommend you one!</h2>
+            <a href="{{ url_for('recommend') }}" class="title"><button class="recommend-button">recommend</button></a>
         </div>
-        {% endif %}
     </div>
 
-</div>    
     <div>
         {% if results %}
+        <style> 
+            .recommend-container{
+                display: none;
+            }
+            body {
+                overflow-y: auto;
+            }
+        </style>
             <ul>
-                {% for uni in results %}
-    </li>
+               
+    <li>
     <div class="card">
+        {% for uni in results %}
         <div class="card-body">
-            <h2 class="card-title"><a href="{{uni.website}}" class="btn btn-primary">{{ uni.name }}</a></h2>
+            <h2 class="card-title"><a href="{{uni.website}}" class="btn btn-primary" target="_blank">{{ uni.name }}</a></h2>
             <p class="card-text">{{ uni.description }}</p>
         </div>
     </div>                
@@ -97,4 +108,4 @@
     </div>
 
 </body>
-</html
+</html>

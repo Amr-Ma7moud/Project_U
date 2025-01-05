@@ -7,47 +7,45 @@
     --buttoncolor: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.2), transparent);
     --fontcolor: white;
   }
+  
   body {
     font-family: var(--pfont);
-    overflow-x: hidden;
+    overflow-x:hidden;
     align-items: center;
     justify-content: center;
-    height: 100vh;
     margin: 0;
     /* display: flex; */
     text-align: center;
-    min-height: 100vh;
     color: var(--fontcolor);
-    overflow: hidden;
   }
 
   .header {
     text-align: center;
     padding: 5px;
-    position: relative;
+    position: sticky;
     animation: fadeInDown 0.5s ease-out;
     font-size: 1.5rem;
     font-family: var(--h1font);
     font-weight: bold;
     text-shadow: 3px 2px 0px #8B5CF6;
     font-weight: 800;
+    z-index: 20;
 }
+
+
   .card {
     /* Add shadows to create the "card" effect */
 
-    padding: 60px 80px;
+    padding: 50px;
     background: rgba(255, 255, 255, 0.05);
-    border: 1px solid hsla(0, 0%, 100%, 0.53); /* 5px rounded corners */
-    padding-left:5%;
-    padding-right:5%;
+    border: 1px solid hsla(0, 0%, 100%, 0.53);
+    border-radius: 10px;
     margin-right:10%;
-    margin-left: 10%;
-    margin-top: 10px;
-    height: 15px ;
-    text-align: left;
+    margin-left: 20%;
+    margin-bottom: 1%;
+    height:max-content ;
+    width: 50%;
 
-
-    /* width: 50%; */
   }
   
   /* On mouse-over, add a deeper shadow */
@@ -57,70 +55,43 @@
   
   /* Add some padding inside the card container */
   .container {
-
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    width: 95%;
+    align-items: center;
     transition: 0.3s;
     animation: formAppear 0.6s ease-out;
-    margin: top 30px; 
-    margin-bottom:30px;
+    margin: 30px; 
+    overflow-x: hidden;
+    overflow-y:visible;
 
   }
-#h2{
-  margin-bottom: 20px;
-}
+  
+  .card h2 {
+    
+   text-align: left;
+   
+  
+  }
 
-.submit{
-  width: 25%;
+
+.container .card  .learnMore{
+  width: 95%;
   padding: 8px;
   background: linear-gradient(45deg, #8B5CF6, #4C1D95);
   border: none;
   border-radius: 8px;
-  color: black;
+  color: white;
   font-size: 1rem;
   cursor: pointer;
-  transition: transform 0.3s ease;
-  margin-bottom: 100px;
-float: right;
-}
-.card-content {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  float: right;
+  
 }
 
-.uni-name {
-  font-size: 1.5rem;
-  font-family: var(--h1font);
-  font-weight: bold;
-  text-shadow: 3px 2px 0px #8B5CF6;
-  font-weight: 800;
-  margin-bottom: 10px;
-}
 
-.attributes {
-  font-size: 1.2rem;
-  font-family: var(--h1font);
-  font-weight: bold;
-  text-shadow: 3px 2px 0px #8B5CF6;
-  font-weight: 800;
-  margin-bottom: 10px;
+.learnMore:hover{
+  transform: scale(1.01);
+  background: white;
+  color: black;
 }
-/* .uni-name{
-  font-size: 1.5rem;
-  font-family: var(--h1font);
-  font-weight: bold;
-  text-shadow: 3px 2px 0px #8B5CF6;
-  font-weight: 800;
-  margin-bottom: 20px;
-}
-.attributes{
-  font-size: 1.2rem;
-  font-family: var(--h1font);
-  font-weight: bold;
-  text-shadow: 3px 2px 0px #8B5CF6;
-  font-weight: 800;
-  margin-bottom: 20px;
-} */
 
 @keyframes formAppear {
   from {

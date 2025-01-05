@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="../static/css/navbar.css">
     <link rel="stylesheet" type="text/css" href="../static/css/background.css">
     <link rel="stylesheet" type="text/css" href="../static/css/signup.css">
+    <link rel="stylesheet" href="../static/css/flashM.css">
     <title>Sign Up</title>
 </head>
 <body>
@@ -31,19 +32,29 @@
     <a href="{{ url_for('aboutUs') }}"><button class="button" id="aboutUs">About US</button></a>
 
 </div>
-<div class="no-inherit-display" style="position: fixed; top: 0; width: 100%; z-index: 1; text-align: center;">
-    <div class="flash-messages">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
+
+
+<!-- alert massages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+    {% for category, message in messages %}
+    <link rel="stylesheet" href="../static/css/flashM.css">
+   
+<div class="no-inherit-display"  style="position: fixed; top: 0; width: 100%; z-index: 1; text-align: center;">
+    <div class="flash-messages" id="flash-messages" onclick="document.getElementById('flash-messages').style.display='none';">  
+         
             <div class="alert alert-{{category}} text-center">
                 {{message}}
             </div>
-            {% endfor %}
-        {% endif %}
-        {% endwith %}
 </div>
 </div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+
+
+
 <div class="form-container">
     <h2 class="form-title">Sign Up</h2>
     <form action="" method="POST">
@@ -58,10 +69,24 @@
                     {% for error in form.username.errors %}
                     <span>{{ error }}</span>
                     {% endfor %}
-                </div>
+                </div>  
                 {% else %}
                 {{ form.username(class='form-control form-control-lg',placeholder="Username") }}
                 {% endif %}
+
+                {{ form.name.label(class='form-control-label') }}
+                {% if form.name.errors %}
+                {{ form.name(class='form-control form-control-lg is-invalid',placeholder="name") }}
+                <div class="invalid-feedback">
+                    {% for error in form.name.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.name(class='form-control form-control-lg',placeholder="name") }}
+                {% endif %}
+                
+
                 {{ form.email.label(class='form-control-label') }}
                 {% if form.email.errors %}
                 {{ form.email(class='form-control form-control-lg is-invalid', placeholder="Email") }}
@@ -73,7 +98,9 @@
                 {% else %}
                 {{ form.email(class='form-control form-control-lg', placeholder="Email") }}
                 {% endif %}
-        
+               
+            <div class="form-group2">
+                
                 {{ form.password.label(class='form-control-label') }}
                 {% if form.password.errors %}
                 {{ form.password(class='form-control form-control-lg is-invalid',placeholder="Password") }}
@@ -89,6 +116,7 @@
                 {{ form.confirm_password.label(class='form-control-label') }}
                 {% if form.confirm_password.errors %}
                 {{ form.confirm_password(class='form-control form-control-lg is-invalid',placeholder="confirm_password") }}
+                
                 <div class="invalid-feedback">
                     {% for error in form.confirm_password.errors %}
                     <span>{{ error }}</span>
@@ -97,19 +125,9 @@
                 {% else %}
                 {{ form.confirm_password(class='form-control form-control-lg',placeholder="confirm_password") }}
                 {% endif %}
-            </div>            
-            <div class="form-group2">
-                {{ form.name.label(class='form-control-label') }}
-                {% if form.name.errors %}
-                {{ form.name(class='form-control form-control-lg is-invalid',placeholder="name") }}
-                <div class="invalid-feedback">
-                    {% for error in form.name.errors %}
-                    <span>{{ error }}</span>
-                    {% endfor %}
-                </div>
-                {% else %}
-                {{ form.name(class='form-control form-control-lg',placeholder="name") }}
-                {% endif %}
+            </div>     
+
+
                 {{ form.score.label(class='form-control-label') }}
                     {% if form.score.errors %}
                     {{ form.score(class='form-control form-control-lg is-invalid', type='number', min='1', max='100', step='1',placeholder="Score %") }}
@@ -133,7 +151,7 @@
                 {% else %}
                 {{ form.location(class='form-control form-control-lg',placeholder="Location") }}
                 {% endif %}
-
+        
                 {{ form.section.label(class='form-control-label') }}
                 {% if form.section.errors %}
                 {{ form.section(class='form-control form-control-lg is-invalid',placeholder="Section") }}
@@ -149,7 +167,7 @@
         </div>
         <button type="submit" class="submit-btn">{{ form.submit.label }}</button>
     </form>
-    <div class="login" style= margin:20px;>  <a href="{{url_for('Login')}}">Already have an account?</a></div>
+    <div class="login">  <a href="{{url_for('Login')}}">Already have an account?</a></div>
 </div>
 </body>
 </html>

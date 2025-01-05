@@ -32,9 +32,13 @@ body {
     flex-direction: column;
     align-items: center;
     background: var(--background);
-    color: var(--fontcolor);
+    color: white;
     font-family: var(--pfont);
    
+}
+
+.main-container h1{
+    color: white;
 }
 
 .main-container{
@@ -48,25 +52,10 @@ body {
     margin-top: 5%;
 }
 
-.criteria {
-    border-radius: 25px !important;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 10px;
-    width: 20px;
-
-}
 
 
-.compare-table {
 
-    border-radius: 25px !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
-    background: rgba(255, 255, 255, 0.05);
-    /* margin-right: 10px; */
-    
-    
-   }
-   
+
 
 ul {
     list-style: none;
@@ -108,6 +97,9 @@ ul {
     border-left: 2px solid rgba(255, 255, 255, 0.2);
     text-align: center;
     padding-bottom: 40px;
+    border-radius: 25px !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    background: rgba(255, 255, 255, 0.05);
    }
    
    .compare-table .tution {
@@ -177,7 +169,7 @@ ul {
    }
    
    .compare .compare-table .features li {
-    color: #333333;
+    color: #ffffff;
     border-top: 2px solid rgba(35, 35, 35, 0.2);
     padding: 24px 0px;
     margin: 0;
@@ -190,11 +182,11 @@ ul {
    }
    
    .compare .compare-table .tution .fees {
-    color: #333333;
+    color: #ffffff;
    }
    
    .compare .compare-table .tution .sub {
-    color: #777777;
+    color: #ffffff;
     opacity: 0.7;
    }
    
@@ -205,9 +197,7 @@ ul {
     padding-bottom: 0px;
    }
    
-   .compare  .compare-table .features li:nth-child(even) {
-    background: #f4f4f4;
-   }
+   
    
    .compare-columns .no-pad {
     padding: 0px 15px;

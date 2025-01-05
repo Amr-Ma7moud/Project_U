@@ -51,7 +51,8 @@ body {
     min-height: 100vh;
     background: var(--background);
     font-family: var(--pfont);
-    overflow: hidden;
+    overflow-y: hidden;
+    overflow-x: hidden;
     color: var(--fontcolor);
 }
 
@@ -183,21 +184,55 @@ body {
     font-weight: bold;
 }
 
-.recommend-container h2 {
-    font-weight: bold;
-    font-family: var(--pfont);
-    font-size: 1.5rem;
-    color: #8B5CF6;
+
+.recommend-container{
+
     text-align: center;
     max-width: 600px;
-    line-height: 1.5;
-    margin: 20px auto; /* Center the subtitle */
+    margin: 20px auto;
     transform-style: preserve-3d;
     transform: rotateX(20deg) rotateY(10deg);
     perspective: 500px;
 }
 
-.card{
+.recommend-container h2 {
+
+    font-weight: bold;
+    font-family: var(--pfont);
+    font-size: 1.5rem;
+    color: #8B5CF6;
+    line-height: 1.5;
+
+    
+}
+
+.recommend-button{
+    
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+    background: linear-gradient(45deg, #8B5CF6, #4C1D95);
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position:absolute;
+    margin-left: 20%;
+    
+ 
+}
+
+.recommend-button:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 7px 20px rgba(139, 92, 246, 0.5);
+}
+
+
+
+
+
+.card-body{
     
     background: rgba(255, 255, 255, 0.05);
     border-radius: 20px;
@@ -209,8 +244,8 @@ body {
     margin: auto;
     margin-top:20px ;
     animation: formAppear 0.5s ease-out;
-    
     backdrop-filter: blur(10px);
     box-shadow: 0 15px 35px rgba(0,0,0,0.2);
     text-align: center;
 }
+
