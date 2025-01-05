@@ -61,26 +61,29 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
-# def insert_universities_from_csv(file_path):
-#     with open(file_path, mode="r", encoding="utf-8") as file:
-#         csv_reader = csv.DictReader(file)
-#         for row in csv_reader:
-#             university = University(
-#                 name=row["Name"],
-#                 website=row["Website"],
-#                 university_type=row["Type"],
-#                 location=row["Location"],
-#                 rank=int(row["Rank"]),
-#                 fees=int(row["Tuition fees"]),
-#                 description=row.get("description", ""),
-#                 programs=row["programs"],
-#             )
-#             db.session.add(university)
-#             try:
-#                 db.session.commit()
-#             except IntegrityError:
-#                 db.session.rollback()
-#                 print(f"Skipping duplicate entry: {row['Name']}")
+def nothing():
+    # just to the wrap comments
+    # def insert_universities_from_csv(file_path):
+    #     with open(file_path, mode="r", encoding="utf-8") as file:
+    #         csv_reader = csv.DictReader(file)
+    #         for row in csv_reader:
+    #             university = University(
+    #                 name=row["Name"],
+    #                 website=row["Website"],
+    #                 university_type=row["Type"],
+    #                 location=row["Location"],
+    #                 rank=int(row["Rank"]),
+    #                 fees=int(row["Tuition fees"]),
+    #                 description=row.get("description", ""),
+    #                 programs=row["programs"],
+    #             )
+    #             db.session.add(university)
+    #             try:
+    #                 db.session.commit()
+    #             except IntegrityError:
+    #                 db.session.rollback()
+    #                 print(f"Skipping duplicate entry: {row['Name']}")
+    pass
 
 
 @app.route("/index")
