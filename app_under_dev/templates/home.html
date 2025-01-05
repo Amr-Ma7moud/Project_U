@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../static/css/navbar.css">
     <script src="../static/js/cards.js"></script>
     <title>PROJECT U</title>
-</head>
+</head> 
 <body>
     <!--  background   -->
         <div class="gradient-bg gradient-1"></div>
@@ -21,15 +21,17 @@
 <!-- navbar -->
 <div class="navigation">
     {% if current_user.is_authenticated %}
-        <a href="{{ url_for('profile') }}"><button class="button" id="profile">Profile</button></a>
-        {% else %}  
-        <a href="{{ url_for('Signup') }}"><button class="button" id="Signup">Signup</button></a>
+    <a href="{{ url_for('profile') }}"><button class="button" id="profile">Profile</button></a>
+    {% else %}  
+    <a href="{{ url_for('Signup') }}"><button class="button" id="Signup">Signup</button></a>
     {% endif %}
     <a href="{{ url_for('recommend') }}"><button class="button" id="recommend">recommend</button></a>
     <a href="{{ url_for('main') }}"><button class="button" id="popular">PROJECT U</button></a>
     <a href="{{ url_for('compare') }}"><button class="button" id="compare">compare</button></a>
     <a href="{{ url_for('aboutUs') }}"><button class="button" id="aboutUs">About US</button></a>
-
+    {% if current_user.is_authenticated %}
+    <a href="{{ url_for('logout') }}"><button class="button" id="logout">Log Out</button></a>
+    {% endif %}
 </div>
 <div class="no-inherit-display" style="position: fixed; top: 0; width: 100%; z-index: 1; text-align: center;">
     <div class="flash-messages">
@@ -71,7 +73,7 @@
         </div>
         {% if not query %}
         <div class="recommend-container">
-            <h2>Or make us recommend you a one!</h2>
+            <h2>Or make us <a href="{{url_for('recommend')}}" style="display: inline;">recommend</a> you a one!</h2>
         </div>
         {% endif %}
     </div>

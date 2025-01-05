@@ -1,0 +1,8 @@
+Flask
+Flask-SQLAlchemy
+Flask-Bcrypt
+Flask-WTF
+WTForms
+pandas
+scikit-learn
+requests
