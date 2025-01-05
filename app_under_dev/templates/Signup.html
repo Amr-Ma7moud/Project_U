@@ -133,7 +133,7 @@
                 {% else %}
                 {{ form.location(class='form-control form-control-lg',placeholder="Location") }}
                 {% endif %}
-        
+
                 {{ form.section.label(class='form-control-label') }}
                 {% if form.section.errors %}
                 {{ form.section(class='form-control form-control-lg is-invalid',placeholder="Section") }}
@@ -149,7 +149,7 @@
         </div>
         <button type="submit" class="submit-btn">{{ form.submit.label }}</button>
     </form>
-    <div class="login">  <a href="{{url_for('Login')}}">Already have an account?</a></div>
+    <div class="login" style= margin:20px;>  <a href="{{url_for('Login')}}">Already have an account?</a></div>
 </div>
 </body>
 </html>

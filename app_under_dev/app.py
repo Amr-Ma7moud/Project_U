@@ -282,7 +282,9 @@ def recommend():
         recommendations = recommendations.to_dict(orient="records")
 
         # Render the recommendations on the same page
-        return render_template("recommend_form.html", recommendations=recommendations)
+        return render_template(
+            "recommend_form.html", recommendations=recommendations, user=user
+        )
 
     except Exception as e:
         return render_template("recommend_form.html", error=str(e))
