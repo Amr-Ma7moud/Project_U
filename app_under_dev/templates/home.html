@@ -61,26 +61,31 @@
                             <path d="M4 9a5 5 0 1110 0A5 5 0 014 9zm5-7a7 7 0 104.2 12.6.999.999 0 00.093.107l3 3a1 1 0 001.414-1.414l-3-3a.999.999 0 00-.107-.093A7 7 0 009 2z" fill-rule="evenodd" fill="#17202A"></path>
                         </svg>
                     </button>
+                    {% if query %}
+                    <input type="text" name="search_query" class="input__search" placeholder="{{query}}">
+                    {% else %}
                     <input type="text" name="search_query" class="input__search" placeholder="search for a university">
+                    {% endif %}
                 </div>
             </form>
         </div>
-        
+        {% if not query %}
         <div class="recommend-container">
             <h2>Or make us recommend you a one!</h2>
         </div>
+        {% endif %}
     </div>
 
-    {% if search_results %}
-    <div class="search-results">
-        <h2>Search Results:</h2>
-        <ul>
-            {% for result in search_results %}
-            <li>{{ result.name }} - <a href="{{ result.website }}">{{ result.website }}</a></li>
-            {% endfor %}
-        </ul>
+</div>    
+    <div>
+        {% if results %}
+            <ul>
+                {% for university in results %}
+                <li>{{ university.name }} - {{ university.location }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
     </div>
-    {% endif %}
 
 </body>
-</html>
+</html

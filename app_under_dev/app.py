@@ -22,6 +22,7 @@ from wtforms.validators import (
     EqualTo,
 )
 import os
+
 # from API import Config
 from flask_login import (
     LoginManager,
@@ -36,6 +37,10 @@ from sqlalchemy.exc import IntegrityError
 import requests
 from sqlalchemy import or_
 import logging
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.preprocessing import LabelEncoder, StandardScaler
+import pandas as pd
+
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "b1zklfghapfhasefljhnwefklashndfklw"
@@ -105,14 +110,6 @@ def compare():
     return render_template("compare.html")
 
 
-@app.route("/recommend")
-def recommend():
-    if not current_user.is_authenticated:
-        flash("You need to log in.", "info")
-        return redirect(url_for("Signup"))
-    return render_template("recommend.html")
-
-
 @app.route("/Signup", methods=["GET", "POST"])
 def Signup():
     if current_user.is_authenticated:
@@ -162,7 +159,7 @@ def Login():
             session["user_name"] = user.name
             return redirect(url_for("main"))
         flash("Invalid email or password please check credentials.", "danger")
-        return redirect(url_for("profile"))
+        return redirect(url_for("Login"))
     return render_template("Login.html", form=form)
 
 
@@ -185,44 +182,14 @@ def profile():
 
 @app.route("/search", methods=["GET", "POST"])
 def search():
-    name = request.args.get("search_query", "").lower()
-    location = request.args.get("location", "").lower()
-    tuition_fee = request.args.get("tuition_fee")
-    programs = request.args.get("programs", "").lower()
+    query = request.form.get("search_query")  # Get user input
+    results = []
+    if query:
+        # Perform a case-insensitive search
+        results = University.query.filter(University.name.ilike(f"%{query}%")).all()
 
-    # Build the query dynamically
-    query = University.query
-    if name:
-        query = query.filter(University.name.ilike(f"%{name}%"))
-    if location:
-        query = query.filter(University.location.ilike(f"%{location}%"))
-    if tuition_fee:
-        try:
-            tuition_fee = float(tuition_fee)
-            query = query.filter(University.fees <= tuition_fee)
-        except ValueError:
-            return jsonify({"message": "Invalid tuition fee value"}), 400
-    if programs:
-        query = query.filter(University.programs.ilike(f"%{programs}%"))
+    return render_template("home.html", results=results, query=query)
 
-    universities = query.all()
-
-    # Format the response
-    result = [
-        {
-            "id": uni.id,
-            "name": uni.name,
-            "location": uni.location,
-            "tuition_fee": uni.fees,
-            "programs": uni.programs,
-            "website": uni.website,
-            "type": uni.university_type,
-            "description": uni.description,
-        }
-        for uni in universities
-    ]
-
-    return jsonify(result)
 
 @app.route("/delete_profile", methods=["POST", "GET"])
 @login_required
@@ -237,6 +204,87 @@ def delete_profile():
         return redirect(url_for("index"))
     flash("User not found.", "danger")
     return redirect(url_for("profile"))
+
+
+@app.route("/recommend", methods=["GET", "POST"])
+def recommend():
+    if "user_id" not in session:
+        return redirect(url_for("Login"))  # Redirect to login if user is not logged in
+
+    # Fetch the logged-in user's data
+    user = User.query.get(session["user_id"])
+    user_score = user.score
+    user_section = user.section.lower()
+    user_location = user.location.lower()
+
+    try:
+        # Fetch all universities from the database
+        universities = University.query.all()
+
+        # Convert universities to a DataFrame
+        data = {
+            "name": [uni.name for uni in universities],
+            "location": [uni.location for uni in universities],
+            "programs": [uni.programs for uni in universities],
+            "tuition_fee": [uni.fees for uni in universities],
+            "website": [uni.website for uni in universities],
+        }
+        df = pd.DataFrame(data)
+
+        # Handle missing values in `tuition_fee`
+        df["tuition_fee"] = df["tuition_fee"].fillna(0)  # Replace NaN with 0
+
+        # Handle unseen labels in 'location' and 'programs'
+        unique_locations = df["location"].unique().tolist()
+        unique_programs = df["programs"].unique().tolist()
+
+        # If user_location is not in the dataset, use a default value
+        if user_location not in unique_locations:
+            user_location = unique_locations[0]  # Use the first location as default
+
+        # If user_section is not in the dataset, use a default value
+        if user_section not in unique_programs:
+            user_section = unique_programs[0]  # Use the first program as default
+
+        # Encode categorical features
+        le_location = LabelEncoder()
+        le_programs = LabelEncoder()
+        df["location_encoded"] = le_location.fit_transform(df["location"])
+        df["programs_encoded"] = le_programs.fit_transform(df["programs"])
+
+        X = df[["location_encoded", "programs_encoded"]]
+        y = df["tuition_fee"]  # Use tuition_fee as the target for classification
+
+        scaler = StandardScaler()
+        X_scaled = scaler.fit_transform(X)
+
+        knn = KNeighborsClassifier(n_neighbors=5)
+        knn.fit(X_scaled, y)
+
+        user_location_encoded = le_location.transform([user_location])[0]
+        user_programs_encoded = le_programs.transform([user_section])[0]
+        user_features = scaler.transform(
+            [[user_location_encoded, user_programs_encoded]]
+        )
+
+        predicted_tuition_fee = knn.predict(user_features)[0]
+
+        location_filtered = df[df["location"].str.lower() == user_location]
+
+        if len(location_filtered) == 0:
+            location_filtered = df  # Fallback to all universities
+        recommendations = location_filtered[
+            location_filtered["tuition_fee"] <= predicted_tuition_fee
+        ]
+        recommendations = recommendations.sort_values(by="tuition_fee").head(5)
+        recommendations = recommendations.to_dict(orient="records")
+
+        # Render the recommendations on the same page
+        return render_template("recommend_form.html", recommendations=recommendations)
+
+    except Exception as e:
+        return render_template("recommend_form.html", error=str(e))
+
 
 class University(db.Model):
     id = db.Column(db.Integer, primary_key=True)
