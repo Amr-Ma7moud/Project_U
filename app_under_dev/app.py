@@ -210,8 +210,9 @@ def delete_profile():
 
 @app.route("/recommend", methods=["GET", "POST"])
 def recommend():
-    if "user_id" not in session:
-        return redirect(url_for("Login"))  # Redirect to login if user is not logged in
+    if not current_user.is_authenticated:
+        flash("You need to log in first", "info")
+        return redirect(url_for("Login"))
 
     # Fetch the logged-in user's data
     user = User.query.get(session["user_id"])

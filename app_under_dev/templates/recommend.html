@@ -53,18 +53,18 @@
 {% if recommendations %}
     <div class="container">
         {% for uni in recommendations %}
-        <div class="card">
-            <h2 id="h2"><b>{{uni.name}}</b></h2>
-            <button type="submit" class="submit"><a href="{{ uni.website }}" target="_blank">Learn More</a></button>
-            {{ uni.location }}
-            {{ uni.major }}
-            {{ uni['Tuition fees'] }}
+        <div class="card">  
+            <div class="card-content">
+            <h2 class="uni-name" id="h2"><b>{{uni.name}}</b></h2>
+            <p class="attributes"> {{ uni.location }} {{ uni.programs }} {{ uni.fees }} </p>
+        </div>
+        <button type="submit" class="submit"><a href="{{ uni.website }}" target="_blank">Learn More</a></button>
         </div>
         {% endfor %}
         </div>
     </div>
     {% endif %}
-
+<div style="text-align: center; margin-top: 20px;">This recommendation is based on the data of {{current_user.name}}</div>
 <!-- 
         <div class="recommendations">
             <h2>Top Recommendations</h2>
