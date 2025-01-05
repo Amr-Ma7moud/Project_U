@@ -283,11 +283,11 @@ def recommend():
 
         # Render the recommendations on the same page
         return render_template(
-            "recommend_form.html", recommendations=recommendations, user=user
+            "recommend.html", recommendations=recommendations, user=user
         )
 
     except Exception as e:
-        return render_template("recommend_form.html", error=str(e))
+        return render_template("recommend.html", error=str(e))
 
 
 class University(db.Model):

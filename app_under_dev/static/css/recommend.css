@@ -7,7 +7,18 @@
     --buttoncolor: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.2), transparent);
     --fontcolor: white;
   }
-  
+  .header {
+    text-align: center;
+    padding: 5px;
+    position: relative;
+    animation: fadeInDown 0.5s ease-out;
+    font-size: 4.5rem;
+    font-family: var(--h1font);
+    padding-top: 7%;
+    font-weight: bold;
+    text-shadow: 3px 2px 0px #8B5CF6;
+    font-weight: 800;
+} 
   body {
     font-family: var(--pfont);
     overflow-x: hidden;
