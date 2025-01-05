@@ -196,3 +196,21 @@ body {
     transform: rotateX(20deg) rotateY(10deg);
     perspective: 500px;
 }
+
+.card{
+    
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    width: 30%;
+    height: 50%;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    margin-top:20px ;
+    animation: formAppear 0.5s ease-out;
+    
+    backdrop-filter: blur(10px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    text-align: center;
+}

@@ -82,11 +82,18 @@
     <div>
         {% if results %}
             <ul>
-                {% for university in results %}
-                <li>{{ university.name }} - {{ university.location }}</li>
+                {% for uni in results %}
+    </li>
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title"><a href="{{uni.website}}" class="btn btn-primary">{{ uni.name }}</a></h2>
+            <p class="card-text">{{ uni.description }}</p>
+        </div>
+    </div>                
+    </li>
                 {% endfor %}
             </ul>
-            {% endif %}
+                {% endif %}
     </div>
 
 </body>

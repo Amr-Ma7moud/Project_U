@@ -83,8 +83,8 @@ def load_user(user_id):
 #                 print(f"Skipping duplicate entry: {row['Name']}")
 
 
-@app.route("/")
 @app.route("/index")
+@app.route("/")
 def index():
     return render_template("index.html")
 
@@ -165,6 +165,9 @@ def Login():
 
 @app.route("/logout")
 def logout():
+    if not current_user.is_authenticated:
+        flash("YOU SHOULDN'T BE THERE", "danger")
+        return redirect(url_for("Login"))
     logout_user()
     flash("You loged out successfully", "info")
     return redirect(url_for("index"))
@@ -172,8 +175,7 @@ def logout():
 
 @app.route("/profile")
 def profile():
-    if current_user.is_authenticated == False:
-        # if "user_id" not in session:
+    if not current_user.is_authenticated:
         return redirect(url_for("Signup"))
     user_id = session["user_id"]
     user = User.query.get(user_id)
