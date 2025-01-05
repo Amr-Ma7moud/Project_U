@@ -5,13 +5,24 @@
     --inputfont: 'Noto Sans', sans-serif;
     --background: linear-gradient(45deg, #050505, #010101);
     --buttoncolor: linear-gradient(
-        120deg,
-        transparent,
-        rgba(255, 255, 255, 0.2),
-        transparent
+      45deg, #8B5CF6, #4C1D95
     );
     --fontcolor: white;
     --fillcolor: white;
+}
+
+
+
+
+@keyframes formAppear {
+  from {
+      opacity: 0;
+      transform: translateY(20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
 }
 
 
@@ -65,7 +76,7 @@ body {
     border-radius: 20px;
     width: 50%;
     height: 50%;
-    display: flex;
+    display: grid;
     align-items: center;
     justify-content: center;
     margin: auto;
@@ -82,6 +93,15 @@ body {
     margin-top: 10%;
 }
   
-
-
- 
+.logout{
+   background-color: #8B5CF6 ;
+    color: var(--fontcolor);
+    border: none;
+    padding: 10px 20px;
+    font-size: 10px;
+    font-family: var(--buttonfont);
+    margin-top: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+    animation: fadeInDown 0.5s ease-out;
+}

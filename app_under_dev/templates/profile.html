@@ -40,7 +40,7 @@
     {% for category, message in messages %}
     <link rel="stylesheet" href="../static/css/flashM.css">
 <div class="no-inherit-display" style="position: fixed; top: 0; width: 100%; z-index: 1; text-align: center;">
-    <div class="flash-messages">     
+    <div class="flash-messages" id="flash-messages" onclick="document.getElementById('flash-messages').style.display='none';">     
             <div class="alert alert-{{category}} text-center">
                 {{message}}
             </div>
@@ -71,17 +71,18 @@
         </div>
         
     </div>
+    
+  <div >
+    <a href="{{url_for('logout')}}"><button class="logout" >Logout</button></a>
+  
+  
+  
+    <a href="{{url_for('delete_profile')}}"><button class="logout">Delete Account</button></a>
+  </div>  
 </div>
   
 
   
-  <div class="logout">
-    <a href="{{url_for('logout')}}"><button>Logout</button></a>
-  </div>
-  
-  <div class="edit">
-    <a href="{{url_for('delete_profile')}}"><button>Delete Account</button></a>
-  </div>  
   <div class="back">
 </body>
 </html>

@@ -5,10 +5,7 @@
     --inputfont: 'Noto Sans', sans-serif;
     --background: linear-gradient(45deg, #050505, #010101);
     --buttoncolor: linear-gradient(
-        120deg,
-        transparent,
-        rgba(255, 255, 255, 0.2),
-        transparent
+        45deg, #8B5CF6, #4C1D95
     );
     --fontcolor: white;
 }
