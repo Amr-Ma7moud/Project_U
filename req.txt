@@ -6,3 +6,5 @@ WTForms
 pandas
 scikit-learn
 requests
+flask-login
+email-validators 
