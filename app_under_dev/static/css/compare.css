@@ -105,13 +105,20 @@ body {
     cursor: pointer;
     width: 100%;
 }
-
-.unis option{
-    background: rgba(255, 255, 255, 0.05);
-    color: purple;
+.unis option {
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
     font-size: 1rem;
     cursor: pointer;
+    padding: 10px;
+    border: none;
 }
+/* .unis option{
+    background: transparent;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+} */
 
 
 .compare-btn {
