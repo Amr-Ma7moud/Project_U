@@ -31,7 +31,9 @@
     <a href="{{ url_for('main') }}"><button class="button" id="popular">PROJECT U</button></a>
     <a href="{{ url_for('compare') }}"><button class="button" id="compare">compare</button></a>
     <a href="{{ url_for('aboutUs') }}"><button class="button" id="aboutUs">About US</button></a>
-
+    {% if current_user.is_authenticated %}
+    <a href="{{ url_for('logout') }}"><button class="button" id="aboutUs">Log out</button></a>
+    {% endif %}
 </div>
 
 
