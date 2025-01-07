@@ -163,6 +163,18 @@
                 {% else %}
                 {{ form.section(class='form-control form-control-lg',placeholder="Section") }}
                 {% endif %}
+
+                {{ form.fees.label(class='form-control-label') }}
+                {% if form.fees.errors %}
+                {{ form.fees(class='form-control form-control-lg is-invalid',placeholder=" max fees (optional)") }}
+                <div class="invalid-feedback">
+                    {% for error in form.fees.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.fees(class='form-control form-control-lg',placeholder="max fees (optional)") }}
+                {% endif %}
             </div>            
         </div>
         <button type="submit" class="submit-btn">{{ form.submit.label }}</button>
