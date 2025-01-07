@@ -22,7 +22,6 @@ from wtforms.validators import (
     EqualTo,
 )
 import os
-
 # from API import Config
 from flask_login import (
     LoginManager,
@@ -37,10 +36,6 @@ from sqlalchemy.exc import IntegrityError
 import requests
 from sqlalchemy import or_
 import logging
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.preprocessing import LabelEncoder, StandardScaler
-import pandas as pd
-
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "b1zklfghapfhasefljhnwefklashndfklw"
@@ -61,33 +56,30 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
-def nothing():
-    # just to the wrap comments
-    # def insert_universities_from_csv(file_path):
-    #     with open(file_path, mode="r", encoding="utf-8") as file:
-    #         csv_reader = csv.DictReader(file)
-    #         for row in csv_reader:
-    #             university = University(
-    #                 name=row["Name"],
-    #                 website=row["Website"],
-    #                 university_type=row["Type"],
-    #                 location=row["Location"],
-    #                 rank=int(row["Rank"]),
-    #                 fees=int(row["Tuition fees"]),
-    #                 description=row.get("description", ""),
-    #                 programs=row["programs"],
-    #             )
-    #             db.session.add(university)
-    #             try:
-    #                 db.session.commit()
-    #             except IntegrityError:
-    #                 db.session.rollback()
-    #                 print(f"Skipping duplicate entry: {row['Name']}")
-    pass
+# def insert_universities_from_csv(file_path):
+#     with open(file_path, mode="r", encoding="utf-8") as file:
+#         csv_reader = csv.DictReader(file)
+#         for row in csv_reader:
+#             university = University(
+#                 name=row["Name"],
+#                 website=row["Website"],
+#                 university_type=row["Type"],
+#                 location=row["Location"],
+#                 rank=int(row["Rank"]),
+#                 fees=int(row["Tuition fees"]),
+#                 description=row.get("description", ""),
+#                 programs=row["programs"],
+#             )
+#             db.session.add(university)
+#             try:
+#                 db.session.commit()
+#             except IntegrityError:
+#                 db.session.rollback()
+#                 print(f"Skipping duplicate entry: {row['Name']}")
 
 
-@app.route("/index")
 @app.route("/")
+@app.route("/index")
 def index():
     return render_template("index.html")
 
@@ -108,25 +100,17 @@ def aboutUs():
     return render_template("aboutUs.html")
 
 
-@app.route("/compare", methods=["GET", "POST"])
+@app.route("/compare")
 def compare():
-    form = Compare()
-    if form.validate_on_submit():
-        university_ids = [form.uni1.data, form.uni2.data, form.uni3.data]
-        if len([uid for uid in university_ids if uid]) < 2:
-            flash("Please select at least two universities to compare.", "warning")
-            return redirect(url_for("compare"))
+    return render_template("compare.html")
 
-        universities = University.query.filter(University.id.in_(university_ids)).all()
 
-        if not universities:
-            flash("No universities found for the given IDs.", "danger")
-            return redirect(url_for("compare"))
-
-        return render_template("compare.html", universities=universities)
-
-    universities = University.query.all()
-    return render_template("compare.html", universities=universities, form=form)
+@app.route("/recommend")
+def recommend():
+    if not current_user.is_authenticated:
+        flash("You need to log in.", "info")
+        return redirect(url_for("Signup"))
+    return render_template("recommend.html")
 
 
 @app.route("/Signup", methods=["GET", "POST"])
@@ -178,15 +162,12 @@ def Login():
             session["user_name"] = user.name
             return redirect(url_for("main"))
         flash("Invalid email or password please check credentials.", "danger")
-        return redirect(url_for("Login"))
+        return redirect(url_for("profile"))
     return render_template("Login.html", form=form)
 
 
 @app.route("/logout")
 def logout():
-    if not current_user.is_authenticated:
-        flash("YOU SHOULDN'T BE THERE", "danger")
-        return redirect(url_for("Login"))
     logout_user()
     flash("You loged out successfully", "info")
     return redirect(url_for("index"))
@@ -194,7 +175,8 @@ def logout():
 
 @app.route("/profile")
 def profile():
-    if not current_user.is_authenticated:
+    if current_user.is_authenticated == False:
+        # if "user_id" not in session:
         return redirect(url_for("Signup"))
     user_id = session["user_id"]
     user = User.query.get(user_id)
@@ -203,14 +185,44 @@ def profile():
 
 @app.route("/search", methods=["GET", "POST"])
 def search():
-    query = request.form.get("search_query")  # Get user input
-    results = []
-    if query:
-        # Perform a case-insensitive search
-        results = University.query.filter(University.name.ilike(f"%{query}%")).all()
+    name = request.args.get("search_query", "").lower()
+    location = request.args.get("location", "").lower()
+    tuition_fee = request.args.get("tuition_fee")
+    programs = request.args.get("programs", "").lower()
 
-    return render_template("home.html", results=results, query=query)
+    # Build the query dynamically
+    query = University.query
+    if name:
+        query = query.filter(University.name.ilike(f"%{name}%"))
+    if location:
+        query = query.filter(University.location.ilike(f"%{location}%"))
+    if tuition_fee:
+        try:
+            tuition_fee = float(tuition_fee)
+            query = query.filter(University.fees <= tuition_fee)
+        except ValueError:
+            return jsonify({"message": "Invalid tuition fee value"}), 400
+    if programs:
+        query = query.filter(University.programs.ilike(f"%{programs}%"))
 
+    universities = query.all()
+
+    # Format the response
+    result = [
+        {
+            "id": uni.id,
+            "name": uni.name,
+            "location": uni.location,
+            "tuition_fee": uni.fees,
+            "programs": uni.programs,
+            "website": uni.website,
+            "type": uni.university_type,
+            "description": uni.description,
+        }
+        for uni in universities
+    ]
+
+    return jsonify(result)
 
 @app.route("/delete_profile", methods=["POST", "GET"])
 @login_required
@@ -225,71 +237,6 @@ def delete_profile():
         return redirect(url_for("index"))
     flash("User not found.", "danger")
     return redirect(url_for("profile"))
-
-
-@app.route("/recommend", methods=["GET", "POST"])
-def recommend():
-    if not current_user.is_authenticated:
-        flash("You need to log in first", "info")
-        return redirect(url_for("Login"))
-
-    # Fetch the logged-in user's data
-    user = User.query.get(session["user_id"])
-    user_score = user.score
-    user_section = user.section.lower()
-    user_location = user.location.lower()
-
-    try:
-        # Fetch all universities from the database
-        universities = University.query.all()
-
-        # Filter universities based on user preferences
-        recommendations = []
-        for uni in universities:
-            # Calculate a match score for each university
-            match_score = 0
-
-            # Match location (case-insensitive)
-            if user_location in uni.location.lower():
-                match_score += 1
-
-            # Match section (case-insensitive)
-            if user_section in uni.programs.lower():
-                match_score += 1
-
-            # Match score (if applicable)
-            if user_score >= uni.fees:  # Example: User score >= tuition fees
-                match_score += 1
-
-            # Add the university to recommendations if it matches at least one criterion
-            if match_score > 0:
-                recommendations.append(
-                    {
-                        "name": uni.name,
-                        "location": uni.location,
-                        "programs": uni.programs,
-                        "tuition_fee": uni.fees,
-                        "website": uni.website,
-                        "match_score": match_score,
-                    }
-                )
-
-        # Sort recommendations by match score (highest first)
-        recommendations = sorted(
-            recommendations, key=lambda x: x["match_score"], reverse=True
-        )
-
-        # Limit to top 5 recommendations
-        recommendations = recommendations[:5]
-
-        # Render the recommendations on the same page
-        return render_template(
-            "recommend.html", recommendations=recommendations, user=user
-        )
-
-    except Exception as e:
-        return render_template("recommend.html", error=str(e))
-
 
 class University(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -358,13 +305,6 @@ class LoginForm(FlaskForm):
     )
     remember = BooleanField("Remember Me")
     submit = SubmitField("Log In")
-
-
-class Compare(FlaskForm):
-    uni1 = StringField("University 1", validators=[DataRequired()])
-    uni2 = StringField("University 2", validators=[DataRequired()])
-    uni3 = StringField("University 3")
-    submit = SubmitField("Compare")
 
 
 if __name__ == "__main__":

@@ -31,48 +31,32 @@
     <a href="{{ url_for('aboutUs') }}"><button class="button" id="aboutUs">About US</button></a>
 
 </div>
-
-<!-- alert massages -->
-{% with messages = get_flashed_messages(with_categories=true) %}
-{% if messages %}
-    {% for category, message in messages %}
-    <link rel="stylesheet" href="../static/css/flashM.css">
-   
-<div class="no-inherit-display"  style="position: fixed; top: 0; width: 100%; z-index: 1; text-align: center;">
-    <div class="flash-messages" id="flash-messages" onclick="document.getElementById('flash-messages').style.display='none';">  
-         
+<div class="no-inherit-display" style="position: fixed; top: 0; width: 100%; z-index: 1; text-align: center;">
+    <div class="flash-messages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
             <div class="alert alert-{{category}} text-center">
                 {{message}}
             </div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
 </div>
 </div>
-{% endfor %}
-{% endif %}
-{% endwith %}
-
 
 <div class="header">
-    <h1>Top Recommendations For <span class="highlight">U</span></h1>
+    <h1>PROJECT <span class="highlight">U</span></h1>
 </div>
 
-
-{% if recommendations %}
-    <div class="container">
-        {% for uni in recommendations %}
-        <div class="card">
-            <h2 id="h2"><b>{{uni.name}}</b></h2>
-            
-            {{ uni.location }}<br>
-            {{ uni.major }}<br>
-            {{ uni['Tuition fees'] }}<br>
-            <button type="submit" class="LearnMore"><a href="{{ uni.website }}" target="_blank">Learn More</a></button>
-        </div>
-        {% endfor %}
-        </div>
+<div class="container">
+    <div class="card">
+        <h2 id="h2"><b>University</b></h2>
+        <button type="submit" class="submit">Learn More</button>
+      </div>
     </div>
-    {% else %}
-    <h3>We are sorry, We couldn't recommend for you</h3>
-    {% endif %}
+</div>
+
 
 </body>
 </html>

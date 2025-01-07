@@ -55,71 +55,75 @@
 {% endwith %}
 
 
-
-    <div class="main-container">
-        <section class="compare">
+{% if not form %}
+<div class="main-container">
+    <section class="compare">
             
                 <div class="row text-center">
                     <h1>Compare Universities</h1>
                 </div>
 
                 <div class="row compare-columns">
-                   
-
+                    {%for uni in universities%}
                     <div class="col-md-4 compare-table">
                         <ul class="features">
-                            <li>Name: </li>
-                            <li>Location: </li>
-                            <li>Ranking: </li>
-                            <li>Rate</li>
+                            <li>Name: {{uni.name}} </li>
+                            <li>Location: {{uni.location}}</li>
+                            <li>Ranking in Egypt: {{uni.rank}}</li>
+                            <!-- <li>Rate </li> -->
                         </ul>
                         <div class="tution">
-                            <span class="sub">$</span>
-                            <span class="fees">5000</span>
+                            <span class="fees">{{uni.fees}}</span>
+                            <span class="sub">EGP</span>
                             <span class="sub">/year</span>
-                           </div>
-                           <a href=""><button class="LearnMore">Learn More</button></a>
+                        </div>
+                            <a href="{{uni.website}}" target="_blank"><button class="LearnMore">Learn More</button></a>
                     </div>
-
-
-
-
-
-
-                    <div class="col-md-4 compare-table">
-                        <ul class="features">
-                            <li>Name: </li>
-                            <li>Location: </li>
-                            <li>Ranking: </li>
-                            <li>Rate</li>
-                        </ul>
-
-                        <div class="tution">
-                            <span class="sub">$</span>
-                            <span class="fees">5000</span>
-                            <span class="sub">/year</span>
-                           </div>
-                           <a href=""><button class="LearnMore">Learn More</button></a>
-                    </div>
-
-                    <div class="col-md-4 compare-table">
-                        <ul class="features">
-                            <li>Name: </li>
-                            <li>Location: </li>
-                            <li>Ranking: </li>
-                            <li>Rate</li>
-                        </ul>
-                        <div class="tution">
-                            <span class="sub">$</span>
-                            <span class="fees">5000</span>
-                            <span class="sub">/year</span>
-                           </div>
-                           <a href=""><button class="LearnMore">Learn More</button></a>
-                    </div>
+                    {%endfor%}
                 </div>
+            </div>
             
         </section>
     </div>
+
+{% else %}
+
+
+    <h1>Compare Universities</h1>
+    <form method="POST" action="{{ url_for('compare') }}">
+        {{ form.hidden_tag() }}
+        <div>
+            <label for="university1"class="form-label">{{ form.uni1.label }}</label>
+            <!-- <input type="hidden" name="csrf_token" value="{{ form.csrf_token._value() }}"> -->
+            <select name="uni1" id="university1">
+                {% for university in universities %}
+                <option value="{{ university.id }}">{{ university.name }}</option>
+                {% endfor %}
+                <input type="hidden" name="uni1" value="{{ form.uni1.data }}">
+            </select>
+            
+            <label for="university2"class="form-label">{{ form.uni2.label }}</label>
+            <select name="uni2" id="university2">
+                {% for university in universities %}
+                <option value="{{ university.id }}">{{ university.name }}</option>
+                {% endfor %}
+                <input type="hidden" name="uni2" value="{{ form.uni2.data }}">
+            </select>
+
+            <label for="university3"class="form-label">{{ form.uni3.label }}</label>
+            <select name="uni3" id="university3">
+                {% for university in universities %}
+                    <option value="{{ university.id }}">{{ university.name }}</option>
+                {% endfor %}
+                <input type="hidden" name="uni2" value="{{ form.uni2.data }}">
+            </select>
+
+        </div>
+        <button type="submit">{{form.submit.label}}</button>
+    </form>
+
+
+{% endif %}
 
 </body>
 </html>

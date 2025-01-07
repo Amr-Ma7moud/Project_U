@@ -1,0 +1,198 @@
+:root {
+    --h1font: 'Segoe UI', Arial, sans-serif;
+    --pfont: 'Noto Sans', sans-serif;
+    --buttonfont: 'Noto Sans', sans-serif;
+    --inputfont: 'Noto Sans', sans-serif;
+    --background: linear-gradient(45deg, #050505, #010101);
+    --buttoncolor: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    --fontcolor: white;
+    --fillcolor: white;
+}
+
+@keyframes formAppear {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+body {
+    min-height: 100vh;
+    background: var(--background);
+    font-family: var(--pfont);
+    overflow: hidden;
+    color: var(--fontcolor);
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.header {
+    text-align: center;
+    padding: 5px;
+    position: relative;
+    animation: fadeInDown 0.5s ease-out;
+    font-size: 4.5rem;
+    font-family: var(--h1font);
+    padding-top: 7%;
+    font-weight: bold;
+    text-shadow: 3px 2px 0px #8B5CF6;
+    font-weight: 800;
+}
+
+.header h1 {
+    font-size: 4.5rem;
+    font-family: var(--h1font);
+    font-weight: bold;
+    text-shadow: 3px 2px 0px #8B5CF6;
+    font-weight: 800;
+    color: white;
+    letter-spacing: 8px;
+    margin-bottom: 10px; /* Reduced margin to make subtitle closer */
+    text-align: center;
+    animation: fadeInDown 0.5s ease-out;
+}
+
+.highlight {
+    color: #8B5CF6;
+    text-shadow: 3px 2px 0px white;
+}
+
+.search-recommend {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px; /* Adjust as needed */
+    animation: formAppear 0.5s ease-out forwards;
+}
+
+.search-container {
+    margin: 20px;
+    padding: 20px;
+    transform: scale(1.3);
+}
+
+.input__container {
+    position: relative;
+    background: rgba(255, 255, 255, 0.664);
+    padding: 10px 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    border-radius: 22px;
+    max-width: 300px;
+    transition: transform 400ms;
+    transform-style: preserve-3d;
+    transform: rotateX(-20deg) rotateY(10deg);
+    perspective: 500px;
+}
+
+.input__container:hover {
+    transform: rotateX(0deg) rotateY(0deg);
+}
+
+.shadow__input {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+    filter: blur(30px);
+    border-radius: 20px;
+    background-color: #999cff;
+    background-image: radial-gradient(at 85% 51%, #1b1946 0px, transparent 50%),
+        radial-gradient(at 74% 68%, hsla(235, 69%, 77%, 1) 0px, transparent 50%),
+        radial-gradient(at 64% 79%, hsla(284, 72%, 73%, 1) 0px, transparent 50%),
+        radial-gradient(at 75% 16%, hsla(283, 60%, 72%, 1) 0px, transparent 50%),
+        radial-gradient(at 90% 65%, hsla(153, 70%, 64%, 1) 0px, transparent 50%),
+        radial-gradient(at 91% 83%, hsla(283, 74%, 69%, 1) 0px, transparent 50%),
+        radial-gradient(at 72% 91%, hsla(213, 75%, 75%, 1) 0px, transparent 50%);
+}
+
+.input__button__shadow {
+    cursor: pointer;
+    border: none;
+    background: none;
+    transition: transform 400ms, background 400ms;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    padding: 5px;
+}
+
+.input__button__shadow:hover {
+    background: rgba(255, 255, 255, 0.411);
+}
+
+.input__search {
+    width: 100%;
+    border-radius: 20px;
+    outline: none;
+    border: none;
+    padding: 8px;
+    position: relative;
+}
+
+.input__search::placeholder {
+    font-family: var(--inputfont);
+    font-size: 1rem;
+    color: rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+}
+
+.recommend-container h2 {
+    font-weight: bold;
+    font-family: var(--pfont);
+    font-size: 1.5rem;
+    color: #8B5CF6;
+    text-align: center;
+    max-width: 600px;
+    line-height: 1.5;
+    margin: 20px auto; /* Center the subtitle */
+    transform-style: preserve-3d;
+    transform: rotateX(20deg) rotateY(10deg);
+    perspective: 500px;
+}
