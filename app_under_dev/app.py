@@ -160,9 +160,16 @@ def Signup():
             location=location,
         )
         db.session.add(user)
-        db.session.commit()
-        flash("Account created successfully", "success")
-        return redirect(url_for("Login"))
+        try:
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            flash("An error occurred while committing to the database.", "danger")
+        login_user(user)
+        flash("You have signed up successfully.", "success")
+        session["user_id"] = user.id
+        session["user_name"] = user.name
+        return redirect(url_for("main"))
     return render_template("Signup.html", form=form)
 
 
@@ -213,6 +220,13 @@ def search():
     if query:
         # Perform a case-insensitive search
         results = University.query.filter(University.name.ilike(f"%{query}%")).all()
+        results += University.query.filter(
+            University.location.ilike(f"%{query}%")
+        ).all()
+        results += University.query.filter(
+            University.programs.ilike(f"%{query}%")
+        ).all()
+        results += University.query.filter(University.website.ilike(f"%{query}%")).all()
 
     return render_template("home.html", results=results, query=query)
 

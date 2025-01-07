@@ -54,9 +54,82 @@ body {
 }
 
 
+.header h1 {
+    font-size: 4.5rem;
+    font-family: var(--h1font);
+    font-weight: bold;
+    text-shadow: 3px 2px 0px #8B5CF6;
+    font-weight: 800;
+    color: white;
+    letter-spacing: 8px;
+    margin-bottom: 90px; /* Reduced margin to make subtitle closer */
+    text-align: center;
+    margin-top: 100px;
+    animation: fadeInDown 1.5s ease-out;
+}
+
+.header-for-res h1 {
+    font-size: 4.5rem;
+    font-family: var(--h1font);
+    font-weight: bold;
+    text-shadow: 3px 2px 0px #8B5CF6;
+    font-weight: 800;
+    color: white;
+    letter-spacing: 8px;
+    margin-bottom: 90px; /* Reduced margin to make subtitle closer */
+    text-align: center;
+    margin-top: 10px;
+    animation: fadeInDown 1.5s ease-out;
+}
+
+.unis{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    padding: 10px;
+    animation: formAppear 0.6s ease-out;
+    flex-wrap: wrap; 
+    margin-top: 5%;
+    background:rgba(255, 255, 255, 0.05);
+    border-radius: 25px;
+}
+
+.unis select{
+    padding: 20px;
+    border-radius: 10px;
+    border: none;
+    background: transparent;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 100%;
+}
+
+.unis option{
+    background: rgba(255, 255, 255, 0.05);
+    color: purple;
+    font-size: 1rem;
+    cursor: pointer;
+}
 
 
+.compare-btn {
+  width: 35%;
+  padding: 12px;
+  background: linear-gradient(45deg, #8B5CF6, #4C1D95);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  margin-top: 20px;
+}
 
+.compare-btn:hover {
+  transform: translateY(-2px);
+}
 
 ul {
     list-style: none;
