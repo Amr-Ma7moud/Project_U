@@ -96,6 +96,7 @@
             <label for="university1"class="form-label">{{ form.uni1.label }}</label>
             <!-- <input type="hidden" name="csrf_token" value="{{ form.csrf_token._value() }}"> -->
             <select name="uni1" id="university1">
+                <option value="" disabled selected></option>
                 {% for university in universities %}
                 <option value="{{ university.id }}">{{ university.name }}</option>
                 {% endfor %}
@@ -104,14 +105,16 @@
             
             <label for="university2"class="form-label">{{ form.uni2.label }}</label>
             <select name="uni2" id="university2">
+                <option value="" disabled selected></option>
                 {% for university in universities %}
                 <option value="{{ university.id }}">{{ university.name }}</option>
                 {% endfor %}
                 <input type="hidden" name="uni2" value="{{ form.uni2.data }}">
             </select>
-
+            
             <label for="university3"class="form-label">{{ form.uni3.label }}</label>
             <select name="uni3" id="university3">
+                <option value="" disabled selected></option>
                 {% for university in universities %}
                     <option value="{{ university.id }}">{{ university.name }}</option>
                 {% endfor %}
@@ -119,7 +122,9 @@
             </select>
 
         </div>
-        <button type="submit">{{form.submit.label}}</button>
+        <div class="text-center">
+            <button type="submit" class="button">{{ form.submit.label }}</button>
+        </div>
     </form>
 
 

@@ -111,10 +111,15 @@ def aboutUs():
 @app.route("/compare", methods=["GET", "POST"])
 def compare():
     form = Compare()
+    university_ids = (form.uni1.data, form.uni2.data, form.uni3.data)
     if form.validate_on_submit():
         university_ids = [form.uni1.data, form.uni2.data, form.uni3.data]
-        if len([uid for uid in university_ids if uid]) < 2:
+        if len(university_ids) < 2:
             flash("Please select at least two universities to compare.", "warning")
+            return redirect(url_for("compare"))
+
+        if len(set(university_ids)) != len(university_ids):
+            flash("Please select different universities to compare.", "info ")
             return redirect(url_for("compare"))
 
         universities = University.query.filter(University.id.in_(university_ids)).all()
