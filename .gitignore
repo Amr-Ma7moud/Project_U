@@ -11,3 +11,5 @@ API.py
 Recommendiation.py
 app_under_dev
 project-U-main
+.gitignore
+pyvenv.cfg
