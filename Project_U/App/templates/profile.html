@@ -68,7 +68,9 @@
         <p>{{current_user.email}}</p>
         <p>{{current_user.section}}</p>
         <p>{{current_user.score}}%</p>
-        <p>{{current_user.fees}}%</p>
+        {% if current_user.fees %}
+        <p>{{current_user.fees}}</p>
+        {% endif %}
         </div>
         
     </div>
