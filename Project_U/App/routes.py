@@ -163,8 +163,8 @@ def search():
     results = []
     if query:
         # Perform a case-insensitive search
-        results = University.query.filter(University.name.ilike(f"%{query}%")).all()
-        results = University.query.filter(
+        results += University.query.filter(University.name.ilike(f"%{query}%")).all()
+        results += University.query.filter(
             University.abbreviations.ilike(f"%{query}%")
         ).all()
         results += University.query.filter(
