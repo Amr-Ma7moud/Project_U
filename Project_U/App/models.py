@@ -32,3 +32,4 @@ class User(db.Model, UserMixin):
     section = db.Column(db.String(100), nullable=False)
     location = db.Column(db.String(100), nullable=False)
     fees = db.Column(db.Integer, nullable=True)
+    is_admin = db.Column(db.Boolean, default=False)
