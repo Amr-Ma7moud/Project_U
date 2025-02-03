@@ -163,17 +163,19 @@ def search():
     results = []
     if query:
         # Perform a case-insensitive search
-        results = University.query.filter(University.name.ilike(f"%{query}%")).all()
-        results = University.query.filter(
-            University.abbreviations.ilike(f"%{query}%")
+        results +=  University.query.filter(
+                    University.name.ilike(f"%{query}%")).all()
+        results +=  University.query.filter(
+                    University.abbreviations.ilike(f"%{query}%")
         ).all()
-        results += University.query.filter(
-            University.location.ilike(f"%{query}%")
+        results +=  University.query.filter(
+                    University.location.ilike(f"%{query}%")
         ).all()
-        results += University.query.filter(
-            University.programs.ilike(f"%{query}%")
+        results +=  University.query.filter(
+                    University.programs.ilike(f"%{query}%")
         ).all()
-        results += University.query.filter(University.website.ilike(f"%{query}%")).all()
+        results +=  University.query.filter(
+                    University.website.ilike(f"%{query}%")).all()
 
     return render_template("home.html", results=results, query=query)
 

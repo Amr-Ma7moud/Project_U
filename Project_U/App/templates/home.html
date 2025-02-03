@@ -81,9 +81,15 @@
             </form>
         </div>
         
+        {% if not query %}
         <div class="recommend-container">
             <h2>Or make us <a href="{{ url_for('recommend') }}" class="title">recommend</a> you one!</h2>
         </div>
+        {% elif query and not results  %}
+        <div class="no-result">
+            <h2>Sorry we couldn't find what you want</h2>
+        </div>
+        {% endif %}
     </div>
 
     <div>

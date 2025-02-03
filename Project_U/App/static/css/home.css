@@ -205,6 +205,25 @@ body {
 
     
 }
+.no-result{
+
+    text-align: center;
+    max-width: 600px;
+    margin: 20px auto;
+    transform-style: preserve-3d;
+    perspective: 500px;
+}
+
+.no-result h2 {
+
+    font-weight: bold;
+    font-family: var(--pfont);
+    font-size: 1.5rem;
+    color: #8B5CF6;
+    line-height: 1.5;
+
+    
+}
 
 .recommend-button{
     

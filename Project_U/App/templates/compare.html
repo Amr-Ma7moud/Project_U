@@ -62,10 +62,13 @@
                 <div class="header-for-res" >
                     <h1>Compare Universities</h1>
                 </div>
-
                 <div class="row compare-columns">
-                    {%for uni in universities%}
-                    <div class="col-md-4 compare-table">
+                {%for uni in universities%}
+                    {% if universities|length == 2 %}
+                        <div class="col-md-4 compare-table"style="width: 48%;">
+                    {% else %}
+                        <div class="col-md-4 compare-table" >
+                    {% endif %}
                         <ul class="features">
                             <li>Name: {{uni.name}} </li>
                             <li>Location: {{uni.location}}</li>
