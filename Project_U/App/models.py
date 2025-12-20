@@ -20,6 +20,7 @@ class University(db.Model):
     min_score = db.Column(db.Integer, nullable=True)
     world_ranking = db.Column(db.Integer, nullable=True, unique=True)
     abbreviations = db.Column(db.String(100), nullable=True, unique=True)
+    section = db.Column(db.String(100), nullable=True)
 
 
 class User(db.Model, UserMixin):

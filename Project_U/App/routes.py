@@ -25,6 +25,10 @@ from flask import (
 )
 from sqlite3 import IntegrityError
 from sqlalchemy.exc import IntegrityError
+import pandas as pd
+from sklearn.neighbors import NearestNeighbors
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+import numpy as np
 
 
 @app.route("/index")
@@ -209,45 +213,90 @@ def recommend():
 
     try:
         universities = University.query.all()
-        recommendations = []
+        if not universities:
+            return render_template("recommend.html", error="No data available for recommendation.")
 
+        
+        data = []
         for uni in universities:
-            match_score = 0
-
-            if user_location in uni.location.lower():
-                match_score += 1
-
-            if user_score >= uni.min_score:
-                match_score += 1
-
-            if user_budget and uni.fees <= user_budget:
-                match_score += 1
-
-            if user_section in uni.programs.lower():
-                match_score += 1
-
-            # Add the university to recommendations if it matches at least one criterion
-            if match_score > 0:
-                recommendations.append(
-                    {
-                        "name": uni.name,
-                        "location": uni.location,
-                        "programs": uni.programs,
-                        "tuition_fee": uni.fees,
-                        "website": uni.website,
-                        "match_score": match_score,
-                    }
-                )
-
-        # Sort recommendations by match score (highest first)
-        recommendations = sorted(
-            recommendations, key=lambda x: x["match_score"], reverse=True
-        )
-        recommendations = recommendations[:5]
+            data.append({
+                'id': uni.id,
+                'min_score': uni.min_score if uni.min_score else 0,
+                'fees': uni.fees if uni.fees else 0,
+                'section': uni.section if uni.section else 'General',
+                'location': uni.location
+            })
+        
+        df = pd.DataFrame(data)
+        
+        
+        numerical_features = ['min_score', 'fees']
+        categorical_features = ['section', 'location']
+    
+        
+        df_encoded = pd.get_dummies(df, columns=categorical_features)
+        
+       
+        scaler = StandardScaler()
+        df_encoded[numerical_features] = scaler.fit_transform(df_encoded[numerical_features])
+        
+       
+        feature_cols = [c for c in df_encoded.columns if c != 'id']
+        X = df_encoded[feature_cols].values
+        
+       
+        k = min(5, len(df))
+        knn = NearestNeighbors(n_neighbors=k, metric='euclidean')
+        knn.fit(X)
+        
+       
+        user_section = user.section if user.section else 'General'
+        
+        
+        user_data = pd.DataFrame([{
+            'min_score': user.score,
+            'fees': user.fees if user.fees else 0,
+            'section': user_section,
+            'location': user.location
+        }])
+        
+        
+        user_encoded = pd.get_dummies(user_data, columns=categorical_features)
+        
+        
+        user_encoded = user_encoded.reindex(columns=feature_cols, fill_value=0)
+        
+        
+        user_encoded[numerical_features] = scaler.transform(user_encoded[numerical_features])
+        
+        user_vec = user_encoded.values
+        
+        
+        distances, indices = knn.kneighbors(user_vec)
+        
+        
+        recommended_indices = indices[0]
+        recommended_ids = df.iloc[recommended_indices]['id'].values
+        
+        recommendations = []
+        for idx, dist in zip(recommended_indices, distances[0]):
+             uni_id = df.iloc[idx]['id']
+             uni = University.query.get(int(uni_id)) 
+             match_score = f"{1/(1+dist):.2f}" 
+             recommendations.append({
+                "name": uni.name,
+                "location": uni.location,
+                "programs": uni.programs,
+                "tuition_fee": uni.fees,
+                "website": uni.website,
+                "match_score": match_score, 
+                
+             })
 
         return render_template(
             "recommend.html", recommendations=recommendations, user=user
         )
 
     except Exception as e:
+        print(e)
         return render_template("recommend.html", error=str(e))
